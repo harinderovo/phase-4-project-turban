@@ -23,13 +23,13 @@ Event.create(
 puts '🍪 Seeding users...'
 User.create(
   [
-    { firstname: 'Keith', lastname: 'Ma', email: 'keithma@gmail.com', password_digest: 'keithm@', phone_number: '951-256-0735' },
-    { firstname: 'Jason', lastname: 'Tran', email: 'tranjason@gmail.com', password_digest: 'tran69', phone_number: '951-561-7832' },
-    { firstname: 'William', lastname: 'German', email: 'wilson@gmail.com', password_digest: 'germanpassword', phone_number: '951-451-2371' },
-    { firstname: 'Ian', lastname: 'Holsteen', email: 'djian@gmail.com', password_digest: 'yourfavdj', phone_number: '951-222-0101' },
-    { firstname: 'Adrian', lastname: 'Barba', email: 'abarba123@gmail.com', password_digest: 'adbarb765', phone_number: '909-813-7041' },
-    { firstname: 'Robert', lastname: 'Lee', email: 'golfislife@gmail.com', password_digest: 'tigerwoods14', phone_number: '718-902-1602' },
-    { firstname: 'John', lastname: 'Josef', email: 'jojo@gmail.com', password_digest: 'tobifobi', phone_number: '951-666-3401' },
+    { firstname: 'Keith', lastname: 'Ma', email: 'keithma@gmail.com', password: 'keithm@', phone_number: '951-256-0735' },
+    { firstname: 'Jason', lastname: 'Tran', email: 'tranjason@gmail.com', password: 'tran69', phone_number: '951-561-7832' },
+    { firstname: 'William', lastname: 'German', email: 'wilson@gmail.com', password: 'germanpassword', phone_number: '951-451-2371' },
+    { firstname: 'Ian', lastname: 'Holsteen', email: 'djian@gmail.com', password: 'yourfavdj', phone_number: '951-222-0101' },
+    { firstname: 'Adrian', lastname: 'Barba', email: 'abarba123@gmail.com', password: 'adbarb765', phone_number: '909-813-7041' },
+    { firstname: 'Robert', lastname: 'Lee', email: 'golfislife@gmail.com', password: 'tigerwoods14', phone_number: '718-902-1602' },
+    { firstname: 'John', lastname: 'Josef', email: 'jojo@gmail.com', password: 'tobifobi', phone_number: '951-666-3401' },
   ],
 )
 
