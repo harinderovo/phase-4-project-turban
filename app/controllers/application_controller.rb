@@ -17,6 +17,10 @@ def authorize
    render json: {errors: "unauthorized"}, status: :unauthorized unless current_user
 end
 
+# def authorized 
+#   return render json:{error: "Not Authorized"}, status: :authorized unless session.include? :user_id
+# end
+
   private 
 
 def not_found(error)

@@ -34,8 +34,8 @@ const UserProvider = ({children}) => {
             //   setIsLoading(false);
               if (r.status === 200) {
                 alert("logged in successfully")
-                r.json().then((user) => setUser(user));
-                history.push("/")
+                r.json().then((user) => setUser(user))
+                .then(() => history.push("/"))
               } else {
                 r.json().then((err) => setErrors(err.errors));
               }
@@ -53,10 +53,10 @@ const UserProvider = ({children}) => {
               body: JSON.stringify(userSignupData),
             }).then((r) => {
             //   setIsLoading(false);
-              if (r.status === 200) {
+              if (r.status === 201) {
                 alert("Sign up is successful")
-                r.json().then(userObj => setUser(userObj));
-                history.push("/")
+                r.json().then(userObj => setUser(userObj))
+                .then(() => history.push("/"))
               } else {
                 r.json().then((err) => setErrors(err.errors));
               }

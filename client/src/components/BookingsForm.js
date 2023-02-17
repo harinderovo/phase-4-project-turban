@@ -3,25 +3,25 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { ErrorContext } from '../context/ErrorContext';
 import { UserContext } from '../context/UserContext';
 
-function BookingsForm({bookings, setBookings, API}) {
+function BookingsForm() {
 
     const history = useHistory();
     const [formErrors, setFormErrors] = useState({})
-    const {user} = useContext(UserContext)
-    const {setError} = useContext(ErrorContext)
+    const {user, setUser} = useContext(UserContext)
+    const {setErrors} = useContext(ErrorContext)
     // const [formData, setFormData] =useState(() => {
     //     const storedData = localStorage.getItem("formData")
     //     return storedData ? JSON.parse(storedData) : {};
     // });
 
     const [newForm, setNewForm] = useState({
-        firstname: "",
-        lastname: "",
-        price: "",
-        time: "",
+        // firstname: "",
+        // lastname: "",
+        // price: "",
+        datetime: "",
         location: "",
-        user_id: 1,
-        event_id: 1
+        // user_id: ,
+        event_id: ''
     })
 
     const handleChange = (e) => {
@@ -30,18 +30,25 @@ function BookingsForm({bookings, setBookings, API}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newF = {...newForm, event_id: newForm.event_id*1}
-        fetch("/bookings/new", {
+        const newF = {...newForm, event_id: newForm.event_id}
+        console.log(newF);
+        fetch("/bookings", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(newF)
         })
-        .then(res => res.json())
-        .then(newFormData => setBookings([...bookings, newFormData]))
-        history.push("/");
-    }
+        .then(response => {
+            if (response.status === 201) {
+                response.json().then (new_booking => {
+                    setUser(currentUser => ({...currentUser, bookings: [...currentUser.bookings, new_booking]}))
+                }) .then(() => history.push("/"))
+            } else {
+                response.json().then((err) => setErrors(err.errors));
+              }
+          })
+        }
 
     // const checkUserLoggedIn = () => {
     // }
@@ -91,12 +98,12 @@ function BookingsForm({bookings, setBookings, API}) {
     <div className='ui segment'>
         <form onSubmit={handleSubmit} className='ui form'>
             <div className='inline fields'>
-                <input value={newForm.firstname} onChange={handleChange} type="text" name="firstname" placeholder="First Name" /> <br />
-                <input value={newForm.lastname} onChange={handleChange} type="text" name="lastname" placeholder="Last Name" /> <br />
-                <input value={newForm.price} onChange={handleChange} type="number" name="price" placeholder="Price" /> <br />
-                <input value={newForm.time} onChange={handleChange} type="number" name="time" placeholder="Time" /> <br />
+                {/* {<input value={newForm.firstname} onChange={handleChange} type="text" name="firstname" placeholder="First Name" /> <br />
+                <input value={newForm.lastname} onChange={handleChange} type="text" name="lastname" placeholder="Last Name" /> <br /> */}
+                {/* <input value={newForm.price} onChange={handleChange} type="number" name="price" placeholder="Price" /> <br /> */}
+                <input value={newForm.datetime} onChange={handleChange} type="datetime-local" name="datetime" placeholder="Date/Time" /> <br />
                 <input value={newForm.location} onChange={handleChange} type="text" name="location" placeholder="Location" /> <br />
-                <input value={newForm.event} onChange={handleChange} type="text" name="event" placeholder="Event" /> <br />
+                <input value={newForm.event_id} onChange={handleChange} type="text" name="event_id" placeholder="Event" /> <br />
                 {/* {eventList()} */}
                 <input type="submit" value="Add Booking"/> <br />
                 {/* <form>

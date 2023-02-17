@@ -12,14 +12,30 @@ class BookingsController < ApplicationController
     #create, update and destroyneed debugging
 
     def create
-        new_booking = Booking.create!(bookings_params)
+        new_booking = @user.bookings.create!(bookings_params)
         render json: new_booking, status: :created
     end
 
+    # def update
+    #     @booking.update!(bookings_params)
+    #     render json: @booking, status: :accepted
+    # end
+
     def update
+        find_booking
         @booking.update!(bookings_params)
         render json: @booking, status: :accepted
-    end
+      end
+
+    # def update
+    #     booking = Booking.find(params[:id])
+    #     if booking.user == current_user
+    #         booking.update!(booking_params)
+    #         render json: booking, status: :accepted
+    #     else
+    #         render json: {error: "You can't update other people's posts"}
+    #     end
+    # end
 
     def destroy
         booking = Booking.find(params[:id])
@@ -34,6 +50,6 @@ class BookingsController < ApplicationController
     end
 
     def bookings_params
-        params.permit(:datetime, :location, :status, :price, :user_id, :event_id)
+        params.permit(:datetime, :location, :status, :price, :user_id, :event_id, :booking)
     end
 end

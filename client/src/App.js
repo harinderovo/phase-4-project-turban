@@ -18,7 +18,7 @@ function App() {
   const API = "localhost:3000/bookings"
 
   const [bookings, setBookings] = useState([])
-  const {user} = useContext(UserContext)
+  const {user, setUser} = useContext(UserContext)
   console.log(user)
 
   useEffect(() => {
@@ -29,31 +29,43 @@ function App() {
     }
   }, []);
 
+  const bookingsList = user?.bookings.map(booking => 
+    <Booking key={booking.id} user={user} booking={booking} bookingId={booking.id} API={API} setBookings={setBookings} setUser={setUser} />)
+
   return (
     <div className="App">
       <NavBar />
       <Switch>
+        { user ? (
+          <>
+
         <Route exact path="/bookings/new">
-          <BookingsForm bookings={bookings} setBookings={setBookings} API={API} />
+          <BookingsForm bookings={bookings} setBookings={setBookings} API={API} setUser={setUser} />
         </Route>
-        <Route exact path="/bookings/:id">
-          <Booking API={API} bookings={bookings} setBookings={setBookings} />
+        <Route exact path="/">
+          {bookingsList}
         </Route>
-        <Route exact path="/error">
-          <ErrorPage />
-        </Route>
-        {/* <Route exact path="/login">
-          <Login setUser={setUser} />
-        </Route> */}
         <Route exact path="/users">
           <Users />
         </Route>
         <Route exact path="/account">
           <Account />
         </Route>
-        <Route exact path="/bookings">
-          <BookingsList bookings={bookings} API={API} />
+        <Route path="/*">
+          <ErrorPage />
+        </Route> </>
+        ) : (
+          <>
+        <Route exact path="/login">
+          <Login setUser={setUser} />
         </Route>
+        <Route path="/*">
+          <ErrorPage />
+        </Route> </>
+        )}
+        {/* <Route exact path="/bookings">
+          <BookingsList bookings={bookings} API={API} />
+        </Route> */}
       </Switch>
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
