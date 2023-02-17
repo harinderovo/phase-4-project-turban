@@ -19,6 +19,7 @@ function App() {
 
   const [bookings, setBookings] = useState([])
   const {user} = useContext(UserContext)
+  console.log(user)
 
   useEffect(() => {
     if (user) {
@@ -50,7 +51,7 @@ function App() {
         <Route exact path="/account">
           <Account />
         </Route>
-        <Route exact path="/">
+        <Route exact path="/bookings">
           <BookingsList bookings={bookings} API={API} />
         </Route>
       </Switch>

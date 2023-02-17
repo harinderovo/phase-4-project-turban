@@ -7,14 +7,14 @@ function Booking({API, booking, setBookings, firstname, lastname, phone_number, 
     const [newBookings, setNewBookings] = useState(booking)
     const [showImage, setShowImage] = useState(true)
 
-    useEffect(() => {
-        if (!booking) {
-            fetch(`http://localhost:3000/bookings/${id}`)
-            .then(res => res.json())
-            .then(bookingObj => setNewBookings(bookingObj))
-            .catch(err => alert(err))
-        }
-    }, [booking, id])
+    // useEffect(() => {
+    //     if (!booking) {
+    //         fetch(`http://localhost:3000/bookings/${id}`)
+    //         .then(res => res.json())
+    //         .then(bookingObj => setNewBookings(bookingObj))
+    //         .catch(err => alert(err))
+    //     }
+    // }, [booking, id])
 
     // const = !newBookings ? booking : newBookings
 
@@ -24,7 +24,7 @@ function Booking({API, booking, setBookings, firstname, lastname, phone_number, 
 
     const conditionalClass = location.pathname === "/" ? "Booking list" : "Booking individual"
   return (
-    <div className={conditionalClass} id={id}>
+    <div id={id}>
         <li>
             {location.pathname === "/" ? (<>
                 <Link to ={`/bookings/${id}`}></Link>
