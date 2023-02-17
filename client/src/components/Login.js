@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
@@ -7,36 +7,24 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
+import { useHistory } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
-function Login() {
+function Login({setToggleAuth}) {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [errors, setErrors] = useState([])
-    const [user, setUser] = useState([])
+    const {handleLogin, user} = useContext(UserContext)
+    const history = useHistory()
+    const [userLoginData, setUserLoginData] = useState({
+        email: "",
+        password: ""
+    })
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        // setIsLoading(true);
-        fetch("/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }).then((r) => {
-        //   setIsLoading(false);
-          if (r.ok) {
-            r.json().then((user) => setUser(user));
-          } else {
-            r.json().then((err) => setErrors(err.errors));
-          }
-        });
-      }
-
-    // const handleChange = () => {
-    //     let y
-    // }
+    const handleChange = ({target: {name, value}}) => {
+        setUserLoginData(currentUser => ({
+            ...currentUser,
+            [name]: value
+        }))
+    }
 
     return (
         <CssVarsProvider>
@@ -62,7 +50,7 @@ function Login() {
                 </Typography>
                 <Typography level="body2">Sign in to continue.</Typography>
               </div>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e) => handleLogin(e, userLoginData)}>
                 <FormControl>
                     <FormLabel>Email</FormLabel>
                     <Input
@@ -70,9 +58,9 @@ function Login() {
                     name="email"
                     type="text"
                     placeholder="johndoe@email.com"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleChange}
                     // value={user.email}
-                    value={email}
+                    value={userLoginData.email}
                     />
                 </FormControl>
                 <FormControl>
@@ -82,16 +70,16 @@ function Login() {
                     name="password"
                     type="password"
                     placeholder="password"
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handleChange}
                     // value={user.password}
-                    value={password}
+                    value={userLoginData.password}
                     />
                 </FormControl>
     
                 <Button type="submit" sx={{ mt: 1 /* margin top */ }}>Log in</Button>
                 </form>
               <Typography
-                endDecorator={<Link /*onClick={() => setToggleAuth(currentVal => !currentVal)}*/>Sign up</Link>}
+                endDecorator={<Link onClick={() => setToggleAuth(currentVal => !currentVal)}>Sign up</Link>}
                 fontSize="sm"
                 sx={{ alignSelf: 'center' }}
               >

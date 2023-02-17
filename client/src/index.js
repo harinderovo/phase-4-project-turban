@@ -4,11 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import { ErrorProvider } from './context/ErrorContext';
+import { UserProvider } from './context/UserContext';
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <ErrorProvider>
+    <BrowserRouter>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </BrowserRouter>
+  </ErrorProvider>,
   document.getElementById("root")
 );
 

@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom';
+import { ErrorContext } from '../context/ErrorContext';
 
 function BookingsForm({bookings, setBookings, API}) {
 
     const history = useHistory();
+    const [formErrors, setFormErrors] = useState({})
+    const {setError} = useContext(ErrorContext)
 
     const [newForm, setNewForm] = useState({
         firstname: "",
@@ -19,8 +22,8 @@ function BookingsForm({bookings, setBookings, API}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(API, {
-            methods: "POST",
+        fetch("/bookings/new", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -40,9 +43,10 @@ function BookingsForm({bookings, setBookings, API}) {
                 <input value={newForm.phonenumber} onChange={handleChange} type="number" name="phonenumber" placeholder="Phone Number" /> <br />
                 <input value={newForm.email} onChange={handleChange} type="text" name="email" placeholder="Email" /> <br />
                 <input value={newForm.password} onChange={handleChange} type="text" name="password" placeholder="Password" /> <br />
+                <input type="submit" value="Add Booking"/> <br />
                 {/* <form>
                 <label for="phone">Enter your phone number:</label>
-                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" />
                 </form> */}
             </div>
         </form>

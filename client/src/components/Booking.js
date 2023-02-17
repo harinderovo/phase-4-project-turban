@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
 
-function Booking({API, setBookings, booking}) {
+function Booking({API, booking, setBookings, firstname, lastname, phone_number, email, password, image}) {
     const location = useLocation();
     const {id} = useParams();
     const [newBookings, setNewBookings] = useState(booking)
@@ -16,28 +16,28 @@ function Booking({API, setBookings, booking}) {
         }
     }, [booking, id])
 
-    const finalBooking = !newBookings ? booking : newBookings
+    // const = !newBookings ? booking : newBookings
 
-    if (!finalBooking) {
-        return <h3>Loading...</h3>
-    }
+    // if (! {
+    //     return <h3>Loading...</h3>
+    // }
 
     const conditionalClass = location.pathname === "/" ? "Booking list" : "Booking individual"
   return (
-    <div className={conditionalClass} id={finalBooking.id}>
+    <div className={conditionalClass} id={id}>
         <li>
             {location.pathname === "/" ? (<>
-                <Link to ={`/bookings/${finalBooking,id}`}><h4>{finalBooking.booking}</h4></Link>
-                <img src = {finalBooking.image} alt = {finalBooking.booking} /> <br />
+                <Link to ={`/bookings/${id}`}></Link>
+                <img src = {image} alt = "booking" /> <br />
             </>) : ( <>
 
-            <h4>{finalBooking.booking}</h4>
-            <img src={finalBooking.image} alt={finalBooking.booking} /> <br />
-            <span className='card-detail'>FirstName: {finalBooking.firstName} </span> <br />
-            <span className='card-detail'>LastName: {finalBooking.lastName} </span> <br />
-            <span className='card-detail'>PhoneNumber: {finalBooking.phoneNumber} </span> <br />
-            <span className='card-detail'>Email: {finalBooking.email} </span> <br />
-            <span className='card-detail'>Password: {finalBooking.password} </span> <br />
+            {/* <h4>{booking}</h4> */}
+            <img src={image} alt="Turban image" /> <br />
+            <span className='card-detail'>FirstName: {firstname} </span> <br />
+            <span className='card-detail'>LastName: {lastname} </span> <br />
+            <span className='card-detail'>PhoneNumber: {phone_number} </span> <br />
+            <span className='card-detail'>Email: {email} </span> <br />
+            <span className='card-detail'>Password: {password} </span> <br />
             </>)}
         </li>
     </div>

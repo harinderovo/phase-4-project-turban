@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Booking from './components/Booking';
 import BookingsForm from './components/BookingsForm';
@@ -10,17 +10,22 @@ import ErrorPage from './components/ErrorPage';
 import Login from './components/Login';
 import NavBar from './components/NavBar';
 import Search from './components/Search';
+import Account from './components/Account';
+import { UserContext } from './context/UserContext';
 
 function App() {
 
   const API = "localhost:3000/bookings"
 
   const [bookings, setBookings] = useState([])
+  const {user} = useContext(UserContext)
 
   useEffect(() => {
-    fetch("/bookings")
-    .then(res => res.json())
-    .then(data => setBookings(data))
+    if (user) {
+      fetch("/bookings")
+      .then(res => res.json())
+      .then(data => setBookings(data))
+    }
   }, []);
 
   return (
@@ -31,16 +36,19 @@ function App() {
           <BookingsForm bookings={bookings} setBookings={setBookings} API={API} />
         </Route>
         <Route exact path="/bookings/:id">
-          <Booking API={API} setBookings={setBookings} />
+          <Booking API={API} bookings={bookings} setBookings={setBookings} />
         </Route>
         <Route exact path="/error">
           <ErrorPage />
         </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
+        {/* <Route exact path="/login">
+          <Login setUser={setUser} />
+        </Route> */}
         <Route exact path="/users">
           <Users />
+        </Route>
+        <Route exact path="/account">
+          <Account />
         </Route>
         <Route exact path="/">
           <BookingsList bookings={bookings} API={API} />
