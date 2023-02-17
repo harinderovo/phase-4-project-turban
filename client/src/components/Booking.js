@@ -8,99 +8,93 @@ function Booking({API, booking, setBookings, firstname, lastname, phone_number, 
     const [showImage, setShowImage] = useState(true)
     const [updatedBooking, setUpdatedBooking] = useState("")
 
-    // useEffect(() => {
-    //     if (!booking) {
-    //         fetch(`http://localhost:3000/bookings/${id}`)
-    //         .then(res => res.json())
-    //         .then(bookingObj => setNewBookings(bookingObj))
-    //         .catch(err => alert(err))
-    //     }
-    // }, [booking, id])
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(newBookings)
+        try {
+     
+        const response = await fetch(`/bookings/${booking.id}`, {
+          method: "PATCH",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            location: newBookings,
+        }),
+    })
+  
+        if (!response.ok) {
+          throw new Error("Failed to update user");
+          console.log("failed")
+        }
+        const updatedUser = await response.json();
+        setBookings(updatedUser);
+        console.log("success")
+        console.log(updatedUser)
+  
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    // const = !newBookings ? booking : newBookings
-
-    // if (! {
-    //     return <h3>Loading...</h3>
-    // }
-
-    // const handleSubmit = async (event) => {
-
-    //     event.preventDefault();
-    //     try {
-    //       const response = await fetch(`/bookings/${booking.id}`, {
+    
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     fetch(`/bookings/${booking.id}`, {
     //         method: 'PATCH',
     //         headers: {
-    //           'Content-Type': 'application/json',
+    //             'Content-Type': 'application/json',
     //         },
     //         body: JSON.stringify({
-    //           location: updatedBooking.location,
+    //             location: updatedBooking.location,
     //         }),
     //     })
-    //       .then(response => {
-    //         if (response.ok) {
-    //           setUser(user => {
-    //             return {...user, bookings: user.bookings.filter(b => b.id !== booking.id)}
-    //           });
-    //       }
-    //       })
+    //     .then(response => {
+    //         if (response.status === 200) {
+    //             setUpdatedBooking(updatedBooking => {
+    //                 return {...updatedBooking, updatedBooking: updatedBooking.location}
+    //         });
     //     }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        fetch(`/bookings/${booking.id}`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              location: updatedBooking.location,
-            }),
-        })
-        .then(response => {
-          if (response.status === 200) {
-            setUpdatedBooking(updatedBooking => {
-              return {...updatedBooking, updatedBooking: updatedBooking.location}
-            });
-        }
-        })
-        }
-    
-
-    // const editBooking = (newBookings) => {
-    //     fetch(`bookings/${booking.id}`, {
-    //         method: "PATCH",
-    //         headers: {
+    //     })
+    //     }
+        
+        
+        // const editBooking = (newBookings) => {
+            //     fetch(`bookings/${booking.id}`, {
+                //         method: "PATCH",
+                //         headers: {
     //             "Content-Type": "application/json",
     //         },
     //         body: JSON.stringify({
-    //             booking: newBookings
-    //         }),
-    //     })
-    //         .then((r) => r.json())
-    //         .then((updatedBooking) => setBookings(updatedBooking));
-    // };
-
-
-    // const handleFormSubmit = (e) => {
-    //     handleSubmit(location)
-    // }
-
-    const handleDelete = () => {
-        fetch(`/bookings/${booking.id}`, {
-        method: 'DELETE',
-        })
-        .then(response => {
-          if (response.ok) {
-            setUser(user => {
-              return {...user, bookings: user.bookings.filter(b => b.id !== booking.id)}
-            });
-        }
-        })
-        }
-
-    const conditionalClass = location.pathname === "/" ? "Booking list" : "Booking individual"
-  return (
-    <div id={id}>
+        //             booking: newBookings
+        //         }),
+        //     })
+        //         .then((r) => r.json())
+        //         .then((updatedBooking) => setBookings(updatedBooking));
+        // };
+        
+        
+        // const handleFormSubmit = (e) => {
+            //     handleSubmit(location)
+            // }
+            
+            const handleDelete = () => {
+                fetch(`/bookings/${booking.id}`, {
+                    method: 'DELETE',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        setUser(user => {
+                            return {...user, bookings: user.bookings.filter(b => b.id !== booking.id)}
+                        });
+                    }
+                })
+            }
+            console.log(booking)
+            
+            const conditionalClass = location.pathname === "/" ? "Booking list" : "Booking individual"
+            return (
+                <div id={id}>
         <div>
             
                 <Link to ={`/bookings/${id}`}></Link>
@@ -126,3 +120,40 @@ function Booking({API, booking, setBookings, firstname, lastname, phone_number, 
 }
 
 export default Booking;
+
+// useEffect(() => {
+//     if (!booking) {
+//         fetch(`http://localhost:3000/bookings/${id}`)
+//         .then(res => res.json())
+//         .then(bookingObj => setNewBookings(bookingObj))
+//         .catch(err => alert(err))
+//     }
+// }, [booking, id])
+
+// const = !newBookings ? booking : newBookings
+
+// if (! {
+//     return <h3>Loading...</h3>
+// }
+
+// const handleSubmit = async (event) => {
+
+//     event.preventDefault();
+//     try {
+//       const response = await fetch(`/bookings/${booking.id}`, {
+//         method: 'PATCH',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           location: updatedBooking.location,
+//         }),
+//     })
+//       .then(response => {
+//         if (response.ok) {
+//           setUser(user => {
+//             return {...user, bookings: user.bookings.filter(b => b.id !== booking.id)}
+//           });
+//       }
+//       })
+//     }

@@ -18,6 +18,8 @@ function Login({setToggleAuth}) {
         email: "",
         password: ""
     })
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const handleChange = ({target: {name, value}}) => {
         setUserLoginData(currentUser => ({
