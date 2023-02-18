@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2023_02_08_170108) do
     t.string "password_digest"
     t.string "firstname"
     t.string "lastname"
-    t.integer "phone_number" #validate must be 10 digits
+    t.string "phone_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

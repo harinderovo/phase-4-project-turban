@@ -21,13 +21,13 @@ function App() {
   const {user, setUser} = useContext(UserContext)
   console.log(user)
 
-  useEffect(() => {
-    if (user) {
-      fetch("/bookings")
-      .then(res => res.json())
-      .then(data => setBookings(data))
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     fetch("/bookings")
+  //     .then(res => res.json())
+  //     .then(data => setBookings(data))
+  //   }
+  // }, []);
 
   const bookingsList = user?.bookings.map(booking => 
     <Booking key={booking.id} user={user} booking={booking} bookingId={booking.id} API={API} setBookings={setBookings} setUser={setUser} />)

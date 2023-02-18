@@ -4,7 +4,7 @@ import { useLocation, useParams, Link } from 'react-router-dom';
 function Booking({API, booking, setBookings, firstname, lastname, phone_number, email, password, image, bookingId, user, setUser}) {
     const location = useLocation();
     const {id} = useParams();
-    const [newBookings, setNewBookings] = useState([])
+    const [newBookings, setNewBookings] = useState("")
     const [showImage, setShowImage] = useState(true)
     const [updatedBooking, setUpdatedBooking] = useState("")
 
@@ -23,15 +23,13 @@ function Booking({API, booking, setBookings, firstname, lastname, phone_number, 
         }),
     })
   
-        if (!response.ok) {
-          throw new Error("Failed to update user");
-          console.log("failed")
+        if (response.status === 202) {
+            const updatedBooking = await response.json();
+            setUser(currentUser => ({...currentUser, bookings: currentUser.bookings.map(singleBooking => singleBooking.id === updatedBooking.id ? updatedBooking : singleBooking)}));
+            setNewBookings("")
+        } else {
+            throw new Error("Failed to update user");
         }
-        const updatedUser = await response.json();
-        setBookings(updatedUser);
-        console.log("success")
-        console.log(updatedUser)
-  
       } catch (error) {
         console.log(error);
       }
